@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 import sys
 import mingus.core.notes as notes
@@ -61,15 +62,14 @@ print(f'li = {li}')
 #indexing issue
 for x in range(0,len(li)):
    composition = composition[:li[x][0]+(13*x)] + "{ \clef bass " + composition[li[x][1]+(13*x):] 
-print('postfuckery', composition)
 
 print('***********<lilypond starting>************')
 lilypond.to_png(composition, "test")
 print('*********<nomacs starting>*********')
 os.system('nomacs test.png')
 
-def main():
 
 
 if __name__ is "__main__":
-    main()
+    print(f'argument: {len(sys.argv)}')
+    
