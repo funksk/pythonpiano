@@ -22,11 +22,6 @@ t = Track(Piano)
 t1 = Track(Bass)
 t1.clef = "bass"
 
-
-
-def init():
-    c = 
-
 #make this better.
 def getbar(b, l, h):
     for y in range(0,4):
