@@ -1,3 +1,4 @@
+#!/bin/python3
 #get the input from the cmd line
 #generate what they want
 #	right, left or both hands
@@ -7,6 +8,13 @@
 #	how many bars?? (set amount right now)
 #create lilypond thing
 #... what a fucking mess this program is...
+#
+#TODO
+#implement correct bass clef
+#make left/right go down the correct path
+#implement multiple notes at once
+#implement doing this in a key (every time??)
+#
 import os, sys, getopt
 import mingus.core.notes as notes
 import mingus.core.meter as meter
@@ -43,7 +51,7 @@ class MingusComposition():
 		if (self.lh.name == 'lefthand') or (self.rh.name == 'righthand'):
 			print("right and left bass clef")
 			self.bassclef(self.composition, 1)
-		elif (self.lh.name == 'lefthand') or (self.rh.name != 'righthand'):
+		elif (self.lh.name == 'lefthand') and (self.rh.name != 'righthand'):
 			print("only left bass clef")
 			self.bassclef(self.composition, 0)
 		print(f'post: {self.composition}')
@@ -71,6 +79,7 @@ class MingusComposition():
 		i = 0
 		j = 2
 		li = []
+
 		for x in (range(0,len(composition))):   #we can mess with the string and add bass clef to anything
 		    if (composition[i] == '{' and composition[j] == '{' and composition[j-1] == ' '):
 		        li.append([i,j])
@@ -108,14 +117,18 @@ def processArgs(argv, comp):
 			comp.nONotes = arg
 		elif opt == '-k':
 			comp.key = arg
+
 	return comp
 
 def main(argv):
+	if argv == []:
+		print("please enter args")
+		exit(2)
 	mingcomp = MingusComposition()
 	mingcomp = processArgs(argv, mingcomp)
 	mingcomp.makecomp()
 	lilypond.to_png(mingcomp.composition, "test")
-#	os.system('nomacs test.png')
+	os.system('nomacs test.png')
 
 
 if __name__ == '__main__':
